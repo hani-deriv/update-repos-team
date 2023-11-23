@@ -1,11 +1,11 @@
 const axios = require("axios");
 const args = require("minimist")(process.argv.slice(2));
-
+console.log(args);
 const HOST = "https://api.github.com";
 
-const TOKEN = args.token;
-const TEAM = args.team; 
-const OWNER = args.owner;
+const TOKEN = args.token || args.t;
+const TEAM = args.team || args.tm;
+const OWNER = args.owner || args.o;
 
 axios.defaults.headers.common["Authorization"] = `Bearer ${TOKEN}`;
 axios.defaults.headers.common["X-GitHub-Api-Version"] = "2022-11-28";
@@ -46,8 +46,10 @@ const run = async () => {
   });
 };
 
-if (TOKEN && TEAM && OWNERi) {
+if (TOKEN && TEAM && OWNER) {
   run();
 } else {
-  console.log("please provide input like:  token <token> team <> owner <>");
+  console.log(
+    "please provide input like:  --token <token> --team <> --owner <>"
+  );
 }
