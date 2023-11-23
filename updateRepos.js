@@ -1,6 +1,5 @@
 const axios = require("axios");
 const args = require("minimist")(process.argv.slice(2));
-console.log(args);
 const HOST = "https://api.github.com";
 
 const TOKEN = args.token || args.t;
@@ -33,21 +32,21 @@ async function updateTeam(team, repoOwner, repoName) {
       data
     );
   } catch (e) {
-    console.log(`Failed to update repo:${repoName}`);
+    console.log(`Failed to update repo:https://github.com/${repoOwner}/${repoName}/settings`);
     console.log(e.response.data);
   }
 }
 
-const run = async () => {
+const run = async (team, owner) => {
   let names = await getRepoNames();
   console.log("Will update repos: ", names);
   names.forEach(async (repo) => {
-    await updateTeam(TEAM, OWNER, repo);
+    await updateTeam(team, owner, repo);
   });
 };
 
 if (TOKEN && TEAM && OWNER) {
-  run();
+  run(TEAM, OWNER);
 } else {
   console.log(
     "please provide input like:  --token <token> --team <> --owner <>"
